@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts ──────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+/* ─── CSS Variables (NexSpace "Architectural Gallery") ──────────────────── */
+:root {
+  --primary:                  #845400;
+  --primary-container:        #ffb347;
+  --primary-fixed:            #ffddb6;
+  --surface:                  #f9f9f9;
+  --surface-container-low:    #f3f3f3;
+  --surface-container-lowest: #ffffff;
+  --on-surface:               #1a1c1c;
+  --secondary:                #5f5e5e;
+  --outline-variant:          #d6c3b0;
+  --ambient-shadow:           0px 20px 40px rgba(26, 28, 28, 0.06);
+}
+
+/* ─── Base ──────────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #f9f9f9;
+    color: #1a1c1c;
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', system-ui, sans-serif;
+  }
+
+  ::selection {
+    background-color: #ffb347;
+    color: #2a1800;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #f3f3f3; }
+  ::-webkit-scrollbar-thumb { background: #845400; border-radius: 3px; }
+}
+
+/* ─── Material Symbols ──────────────────────────────────────────────────── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* ─── Signature Interaction: "Soft Drift" ───────────────────────────────── */
+.soft-drift {
+  transition: all 0.6s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ─── Gradients ─────────────────────────────────────────────────────────── */
+.hero-gradient {
+  background: linear-gradient(135deg, #845400 0%, #ffb347 100%);
+}
+
+/* ─── Glass Header ───────────────────────────────────────────────────────── */
+.glass-header {
+  background: rgba(249, 249, 249, 0.80);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ─── Components ─────────────────────────────────────────────────────────── */
+@layer components {
+  /* Container */
+  .container-ns {
+    @apply max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12;
+  }
+
+  /* Section spacing */
+  .section-padding {
+    @apply py-20 lg:py-28;
+  }
+
+  /* Typography helpers */
+  .display-lg {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .headline-lg {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .headline-sm {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .label-md {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Premium card (white on warm-white bg — "Natural Lift") */
+  .card-premium {
+    @apply bg-[#ffffff] rounded-xl;
+    box-shadow: var(--ambient-shadow);
+  }
+
+  /* Primary CTA button */
+  .btn-primary {
+    background: linear-gradient(135deg, #845400 0%, #ffb347 100%);
+    @apply text-white font-bold rounded-lg px-7 py-3.5 inline-flex items-center gap-2
+           text-sm shadow-[0px_8px_24px_rgba(132,84,0,0.20)]
+           hover:scale-[1.02] transition-all duration-[600ms] ease-[cubic-bezier(0.2,0,0,1)]
+           hover:shadow-[0px_12px_32px_rgba(132,84,0,0.28)];
+  }
+
+  /* Ghost / outline button */
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 rounded-lg font-bold text-sm
+           border border-[#d6c3b0]/30 text-[#1a1c1c]
+           hover:bg-[#f3f3f3] transition-all duration-[600ms] ease-[cubic-bezier(0.2,0,0,1)];
+  }
+
+  /* Input field */
+  .input-ns {
+    @apply w-full px-4 py-3.5 bg-[#f3f3f3] rounded-lg text-[#1a1c1c]
+           placeholder:text-[#847463] outline-none text-sm
+           focus:bg-white focus:ring-1 focus:ring-[#845400]/40
+           transition-all duration-300;
+  }
+
+  /* Section label pill */
+  .label-pill {
+    @apply inline-flex items-center gap-2 text-[#845400] label-md mb-5;
+  }
+}
+
+/* ─── Utilities ──────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .tracking-display { letter-spacing: -0.02em; }
+}
