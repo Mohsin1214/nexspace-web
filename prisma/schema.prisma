@@ -1,0 +1,161 @@
+// NexSpace — Prisma Schema
+// Database: PostgreSQL
+// ORM: Prisma 5
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Portfolio Projects ──────────────────────────────────────────────────────
+model Project {
+  id           String   @id @default(cuid())
+  title        String
+  slug         String   @unique
+  description  String
+  longDesc     String?  @map("long_description")
+  coverImage   String   @map("cover_image")
+  images       String[] // Array of image URLs
+  tags         String[] // e.g. ["Next.js", "UI/UX", "Mobile"]
+  category     ProjectCategory
+  clientName   String?  @map("client_name")
+  projectUrl   String?  @map("project_url")
+  githubUrl    String?  @map("github_url")
+  featured     Boolean  @default(false)
+  published    Boolean  @default(true)
+  order        Int      @default(0)
+  completedAt  DateTime? @map("completed_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("projects")
+}
+
+enum ProjectCategory {
+  WEB_DEVELOPMENT
+  MOBILE_APP
+  UI_UX_DESIGN
+  BRANDING
+  ECOMMERCE
+  OTHER
+}
+
+// ─── Services ────────────────────────────────────────────────────────────────
+model Service {
+  id          String  @id @default(cuid())
+  title       String
+  slug        String  @unique
+  description String
+  longDesc    String? @map("long_description")
+  icon        String  // icon name (lucide) or SVG path
+  features    String[] // List of features/bullet points
+  price       String? // e.g. "Starting from $500"
+  featured    Boolean @default(false)
+  published   Boolean @default(true)
+  order       Int     @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("services")
+}
+
+// ─── Design Gallery ──────────────────────────────────────────────────────────
+model GalleryItem {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  imageUrl    String   @map("image_url")
+  category    GalleryCategory
+  tags        String[]
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("gallery_items")
+}
+
+enum GalleryCategory {
+  UI_DESIGN
+  GRAPHIC_DESIGN
+  LOGO_BRANDING
+  ILLUSTRATION
+  MOTION
+  OTHER
+}
+
+// ─── Team Members ────────────────────────────────────────────────────────────
+model TeamMember {
+  id        String  @id @default(cuid())
+  name      String
+  role      String  // e.g. "Full Stack Developer"
+  bio       String?
+  avatar    String?
+  email     String?
+  linkedin  String?
+  github    String?
+  twitter   String?
+  order     Int     @default(0)
+  published Boolean @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("team_members")
+}
+
+// ─── Testimonials ─────────────────────────────────────────────────────────
+model Testimonial {
+  id         String  @id @default(cuid())
+  name       String
+  role       String  // e.g. "CEO at Acme Corp"
+  company    String?
+  avatar     String?
+  content    String
+  rating     Int     @default(5) // 1-5
+  featured   Boolean @default(false)
+  published  Boolean @default(true)
+  order      Int     @default(0)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("testimonials")
+}
+
+// ─── Contact Messages ─────────────────────────────────────────────────────
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  service   String?       // Which service they're interested in
+  status    MessageStatus @default(UNREAD)
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
+
+  @@map("contact_messages")
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+// ─── Site Settings (Key-Value store) ────────────────────────────────────────
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("site_settings")
+}
